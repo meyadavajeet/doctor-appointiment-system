@@ -1,12 +1,14 @@
 {
+  "homepage": ".",
   "name": "doctor-appointment-mern",
   "version": "1.0.0",
   "description": "",
   "main": "Server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node Server.js",
-    "server": "nodemon Server.js"
+    "start": "node server.js",
+    "nodemon": "nodemon server.js --ignore client",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run nodemon\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -14,9 +16,12 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
+    "concurrently": "^7.6.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
     "mongoose": "^6.9.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20"
