@@ -10,11 +10,15 @@ const Login = () => {
   const onFinish = async (values) => {
     try {
       setLoading(true);
-      const { data } = await axios.post('/api/v1/users/login', values);
+      const res = await axios.post('/api/v1/users/login', values);
+      if (res.data.success) {
+        localStorage.setItem('token', res.data.token);
+        message.success("Login Success");
+        navigate("/");
+      } else {
+        message.error(res.data.message);
+      }
       setLoading(false);
-      message.success("Login Success");
-      localStorage.setItem('user', JSON.stringify({ ...data.data, password: '' }));
-      navigate("/");
     } catch (err) {
       setLoading(false);
       message.error("Something went wrong!")

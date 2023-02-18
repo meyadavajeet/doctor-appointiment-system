@@ -14,10 +14,14 @@ const Register = () => {
     try {
       setLoading(true);
       console.log('Success:', values);
-      await axios.post("/api/v1/users/register", values);
-      message.success("Registration success");
+      const res = await axios.post("/api/v1/users/register", values);
+      if (res.data.success) {
+        message.success("Registration success");
+        navigate("/login");
+      } else {
+        message.error(res.data.message);
+      }
       setLoading(false);
-      navigate("/login");
     } catch (error) {
       setLoading(false);
       message.error(error);
