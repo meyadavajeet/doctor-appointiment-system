@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 //register callback
-const registerController = async (req, res, next) => {
+const registerController = async (req, res) => {
    try {
       //check if user is already registered
       const existingUser = await userModel.findOne({ email: req.body.email });
@@ -27,7 +27,7 @@ const registerController = async (req, res, next) => {
 }
 
 //login callback
-const loginController = async (req, res, next) => {
+const loginController = async (req, res) => {
    try {
       const user = await userModel.findOne({ email: req.body.email });
       if (!user) {
@@ -45,5 +45,29 @@ const loginController = async (req, res, next) => {
    }
 }
 
-module.exports = { loginController, registerController };
+//auth callback
+const authController = async (req, res) => {
+   try {
+      const user = await userModel.findOne({ _id: req.body.userId })
+      if (!user) {
+         return res.status(200).send({
+            success: false,
+            message: 'User not found'
+         });
+      } else {
+         res.status(200).send({
+            success: true,
+            data: {
+               name: user.name,
+               email: user.email
+            }
+         })
+      }
+   } catch (err) {
+      console.log(error);
+      res.status(500).send({ message: 'Authorization error', success: false, error });
+   }
+}
+
+module.exports = { loginController, registerController, authController };
 
