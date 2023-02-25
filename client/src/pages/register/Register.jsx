@@ -4,26 +4,31 @@ import './register.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Spinner from '../../components/Spinner';
+import { useDispatch } from 'react-redux';
+import {
+  showLoading, hide, hideLoading
+} from '../../redux/features/AlertSlice';
 
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   //submit handler
   const onFinish = async (values) => {
     try {
-      setLoading(true);
+      dispatch(showLoading());
       console.log('Success:', values);
       const res = await axios.post("/api/v1/users/register", values);
+      dispatch(hideLoading());
       if (res.data.success) {
         message.success("Registration success");
         navigate("/login");
       } else {
         message.error(res.data.message);
       }
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
+      dispatch(hideLoading());
       message.error(error);
     }
   };
