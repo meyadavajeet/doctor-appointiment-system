@@ -3,14 +3,19 @@ import { Button, Form, Input, message } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import Spinner from '../../components/Spinner';
+import { useDispatch } from 'react-redux';
+import { showLoading, hideLoading } from '../../redux/features/AlertSlice';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(false);
   const onFinish = async (values) => {
     try {
-      setLoading(true);
+      dispatch(showLoading());
       const res = await axios.post('/api/v1/users/login', values);
+      dispatch(hideLoading());
       if (res.data.success) {
         localStorage.setItem('token', res.data.token);
         message.success("Login Success");
@@ -18,9 +23,8 @@ const Login = () => {
       } else {
         message.error(res.data.message);
       }
-      setLoading(false);
     } catch (err) {
-      setLoading(false);
+      dispatch(hideLoading());
       message.error("Something went wrong!")
     }
   };
