@@ -1,7 +1,7 @@
 import { Col, Form, Input, message, Row, TimePicker } from "antd";
 import axios from "axios";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import { hideLoading, showLoading } from "../../redux/features/AlertSlice";
@@ -13,22 +13,33 @@ const ApplyDoctor = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const { user } = useSelector((state) => state.user);
   //submit handler
   const onFinish = async (values) => {
     try {
       dispatch(showLoading());
       console.log('Success:', values);
-      // const res = await axios.post("/api/v1/users/register", values);
-      // dispatch(hideLoading());
-      // if (res.data.success) {
-      //   message.success("Registration success");
-      //   navigate("/login");
-      // } else {
-      //   message.error(res.data.message);
-      // }
+      const res = await axios.post("/api/v1/users/apply-doctor",
+        {
+          ...values, userId: user._id
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      );
+      dispatch(hideLoading());
+      if (res.data.success) {
+        message.success(res.data.message);
+        navigate("/");
+      } else {
+        message.error(res.data.message);
+      }
     } catch (error) {
       dispatch(hideLoading());
-      message.error(error);
+      console.log(error);
+      message.error(`${error} Something went wrong`);
     }
   };
   const onFinishFailed = (errorInfo) => {
@@ -143,21 +154,6 @@ const ApplyDoctor = () => {
             </h4>
             <br />
             <Row gutter={20}>
-              <Col xs={24} md={24} lg={8}>
-                <Form.Item
-                  label="Specialization"
-                  name="specialization"
-                  required
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input specialization"
-                    }
-                  ]}
-                >
-                  <Input type="text" />
-                </Form.Item>
-              </Col>
               <Col xs={24} md={24} lg={8}>
                 <Form.Item
                   label="Specialization"

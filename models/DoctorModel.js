@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
 const doctorSchema = new mongoose.Schema(
   {
@@ -44,6 +44,10 @@ const doctorSchema = new mongoose.Schema(
       type: Object,
       required: [true, "Work timing is required"]
     },
+    status: {
+      type: String,
+      default: "Pending"
+    }
   },
   {
     timestamps: true,

@@ -1,4 +1,5 @@
 const userModel = require('../models/UserModel');
+const doctorModel = require('../models/DoctorModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -67,5 +68,43 @@ const authController = async (req, res) => {
    }
 }
 
-module.exports = { loginController, registerController, authController };
+/**
+ * POST REQUEST CALLBACK
+ * APPLY DOCTOR
+ */
+const applyDoctorController = async (req, res) => {
+   try {
+      const newDoctor = await doctorModel({ ...req.body, status: "Pending" });
+      await newDoctor.save();
+
+      // get admin user
+      const admin = await userModel.findOne({ isAdmin: true });
+      // Save notification for the admin
+      const notification = admin.notification;
+      notification.push({
+         type: "apply-doctor-request",
+         message: `${newDoctor.firstName} ${newDoctor.lastName} has Applied for a Doctor Account.`,
+         data: {
+            doctorId: newDoctor._id,
+            name: newDoctor.firstName + " " + newDoctor.lastName,
+            onClickPath: "/admin/doctors",
+            email: newDoctor.email,
+         }
+      });
+      await userModel.findByIdAndUpdate(admin._id, { notification });
+      res.status(201).send({
+         success: true,
+         message: "Doctor account applied successfully, please wait for approval."
+      })
+   } catch (error) {
+      console.log(error);
+      res.status(500).send({
+         message: 'Error While Applying for Doctor',
+         success: false,
+         error
+      });
+   }
+}
+
+module.exports = { loginController, registerController, authController, applyDoctorController };
 
