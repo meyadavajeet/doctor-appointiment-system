@@ -46,7 +46,7 @@
   text-transform: uppercase;
 }
 .menu {
-  margin-top: 50px;
+  margin-top: -28px;
 }
 .menu-item {
   margin-top: 30px;
@@ -60,9 +60,11 @@
   font-size: 1.2rem;
   margin: 0 15px;
 }
+
 .active {
   background-color: white;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .active a,
 .active i {
