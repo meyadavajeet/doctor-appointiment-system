@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { message } from 'antd';
+import { Badge, message } from 'antd';
 import Footer from './Footer';
 import Header from './Header'
 import './layout.css';
@@ -58,7 +58,9 @@ const Layout = ({ children }) => {
           {/* <Header /> */}
           <div className="header">
             <div className="header-content">
-              <i class="fa-solid fa-bell"></i>
+              <Badge count={user && user.notification.length}>
+                <i className="fa-solid fa-bell text-light"></i>
+              </Badge>
               <Link to="/profile">{user?.name}</Link>
             </div>
           </div>
