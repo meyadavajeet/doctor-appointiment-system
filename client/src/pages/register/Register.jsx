@@ -1,18 +1,14 @@
 import { Button, Form, Input, message } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './register.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Spinner from '../../components/Spinner';
 import { useDispatch } from 'react-redux';
-import {
-  showLoading, hide, hideLoading
-} from '../../redux/features/AlertSlice';
+import { showLoading, hideLoading } from '../../redux/features/AlertSlice';
 
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
 
   //submit handler
   const onFinish = async (values) => {
@@ -91,19 +87,13 @@ const Register = () => {
               </Form.Item>
               <div className="d-flex justify-content-between">
                 <Link to="/login">Already register ? click here to login </Link>
-                {
-                  loading
-                    ?
-                    <Spinner />
-                    :
-                    <Form.Item>
-                      <Button
-                        className="warning"
-                        htmlType="submit">
-                        Register
-                      </Button>
-                    </Form.Item>
-                }
+                <Form.Item>
+                  <Button
+                    className="warning"
+                    htmlType="submit">
+                    Register
+                  </Button>
+                </Form.Item>
               </div>
             </Form>
           </div>

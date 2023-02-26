@@ -1,3 +1,96 @@
+/* main */
+.main {
+  /* padding: 10px; */
+  height: 100vh;
+  display: flex;
+}
+.layout {
+  display: flex;
+}
+.sidebar {
+  min-height: 100%;
+  width: 300px;
+  border-radius: 0px;
+  background-color: darkcyan;
+  box-shadow: 0 0px 10px gray;
+  /* margin-right: 25px; */
+  color: white;
+  /* text-align: center; */
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+}
+
+/* header */
+
+.header {
+  height: 8vh;
+  /* margin-bottom: 20px; */
+  box-shadow: 0 0 2px gray;
+  background-color: darkcyan;
+  box-shadow: 0 0px 10px gray;
+  color: white;
+}
+.body {
+  height: 85vh;
+  /* margin-bottom: 20px; */
+  box-shadow: 0 0 2px gray;
+  background-color: white;
+}
+.logo h6 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 20px 0px;
+  text-transform: uppercase;
+}
+.menu {
+  margin-top: 50px;
+}
+.menu-item {
+  margin-top: 30px;
+}
+.menu-item a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+.menu-item i {
+  font-size: 1.2rem;
+  margin: 0 15px;
+}
+.active {
+  background-color: white;
+  padding: 10px;
+}
+.active a,
+.active i {
+  color: rgb(51, 1, 12);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  justify-content: flex-end;
+  margin: 0 10px 15px 15px;
+}
+
+.header-content i {
+  /* margin-right: 20px; */
+  margin: 10px 20px 0px 1px;
+  font-size: 1.2rem;
+}
+.header-content a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: white;
+  margin: 10px 10px 0px 1px;
+  text-transform: uppercase;
+}
+
+/* footer section */
 .footer {
   position: fixed;
   left: 0;
